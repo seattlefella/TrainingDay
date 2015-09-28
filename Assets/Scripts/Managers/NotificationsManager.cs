@@ -11,7 +11,7 @@ public class NotificationsManager : MonoBehaviour
 
     //Declare listener delegate
     public delegate void ListenerDelegate(NotificationsManager.EVENT_TYPE EType, int Param);
-
+ 
     //Array of listener delegates
     // private List<ListenerDelegate> Listeners = new List<ListenerDelegate>();
 
