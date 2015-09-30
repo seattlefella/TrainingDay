@@ -1,2 +1,4 @@
 Library/
 TrainingdayRunV01_Data/
+*.csproj
+*.sln

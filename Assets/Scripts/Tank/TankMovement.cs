@@ -18,26 +18,10 @@ public class TankMovement : MonoBehaviour
     private float m_TurnInputValue;        
     private float m_OriginalPitch;         
 
-
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
     }
-
-
-    private void OnEnable ()
-    {
-        m_Rigidbody.isKinematic = false;
-        m_MovementInputValue = 0f;
-        m_TurnInputValue = 0f;
-    }
-
-
-    private void OnDisable ()
-    {
-        m_Rigidbody.isKinematic = true;
-    }
-
 
     private void Start()
     {
@@ -47,16 +31,21 @@ public class TankMovement : MonoBehaviour
         m_OriginalPitch = m_MovementAudio.pitch;
     }
 
-
     private void Update()
     {
-        // Store the player's input and make sure the audio for the engine is playing.
+    // Store the player's input and make sure the audio for the engine is playing.
         m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
         m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
         EngineAudio();
     }
 
+    private void FixedUpdate()
+    {
+        // Move and turn the tank.
+        Move();
+        Turn();
+    }
 
     private void EngineAudio()
     {
@@ -82,20 +71,7 @@ public class TankMovement : MonoBehaviour
                 m_MovementAudio.Play();
             }
         }
-
-
     }
-
-
-    private void FixedUpdate()
-    {
-        // Move and turn the tank.
-
-        Move();
-        Turn();
-
-    }
-
 
     private void Move()
     {
@@ -105,7 +81,6 @@ public class TankMovement : MonoBehaviour
         m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
     }
 
-
     private void Turn()
     {
         // Adjust the rotation of the tank based on the player's input.
@@ -113,5 +88,17 @@ public class TankMovement : MonoBehaviour
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0);
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation*turnRotation);
+    }
+
+    private void OnEnable()
+    {
+        m_Rigidbody.isKinematic = false;
+        m_MovementInputValue = 0f;
+        m_TurnInputValue = 0f;
+    }
+
+    private void OnDisable()
+    {
+        m_Rigidbody.isKinematic = true;
     }
 }

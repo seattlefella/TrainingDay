@@ -21,20 +21,12 @@ public class TankShooting : MonoBehaviour
     private bool m_Fired;                
 
 
-    private void OnEnable()
-    {
-        m_CurrentLaunchForce = m_MinLaunchForce;
-        m_AimSlider.value = m_MinLaunchForce;
-    }
-
-
     private void Start()
     {
         m_FireButton = "Fire" + m_PlayerNumber;
 
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
     }
-
 
     private void Update()
     {
@@ -70,6 +62,11 @@ public class TankShooting : MonoBehaviour
 
     }
 
+   private void OnEnable()
+    {
+        m_CurrentLaunchForce = m_MinLaunchForce;
+        m_AimSlider.value = m_MinLaunchForce;
+    }
 
     private void Fire()
     {

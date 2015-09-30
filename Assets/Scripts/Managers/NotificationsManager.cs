@@ -25,6 +25,7 @@ public class NotificationsManager : MonoBehaviour
 	//Methods
 	//------------------------------------------------
 	//Function to add a listener for an notification to the listeners list
+
     public void AddListener(ListenerDelegate Sender, EVENT_TYPE NotificationName)
 	{
 		//Add listener to dictionary
@@ -34,6 +35,7 @@ public class NotificationsManager : MonoBehaviour
 		//Add object to listener list for this notification
 		Listeners[NotificationName].Add(Sender);
 	}
+
 	//------------------------------------------------
 	//Function to remove a listener for a notification
     public void RemoveListener(ListenerDelegate Sender, EVENT_TYPE NotificationName)
@@ -50,6 +52,7 @@ public class NotificationsManager : MonoBehaviour
             //    Listeners[NotificationName].RemoveAt(i); //Matched. Remove from list
 		}
 	}
+
 	//------------------------------------------------
 	//Function to post a notification to a listener
     public void PostNotification( EVENT_TYPE NotificationName, int parm)
@@ -66,6 +69,7 @@ public class NotificationsManager : MonoBehaviour
         }
 
 	}
+
 	//------------------------------------------------
 	//Function to clear all listeners
 	public void ClearListeners()
@@ -73,6 +77,7 @@ public class NotificationsManager : MonoBehaviour
 		//Removes all listeners
 		Listeners.Clear();
 	}
+
 	//------------------------------------------------
 	//Function to remove redundant listeners - deleted and removed listeners
 	public void RemoveRedundancies()

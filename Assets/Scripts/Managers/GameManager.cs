@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameLoop());
     }
 
-
     private void SpawnAllTanks()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -42,7 +41,6 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].Setup();
         }
     }
-
 
     private void SetCameraTargets()
     {
@@ -55,7 +53,6 @@ public class GameManager : MonoBehaviour
 
         m_CameraControl.m_Targets = targets;
     }
-
 
     private IEnumerator GameLoop()
     {
@@ -73,7 +70,6 @@ public class GameManager : MonoBehaviour
         }
    }
 
-
     private IEnumerator RoundStarting()
     {
         ResetAllTanks();
@@ -86,7 +82,6 @@ public class GameManager : MonoBehaviour
 
         yield return m_StartWait;
     }
-
 
     private IEnumerator RoundPlaying()
     {
@@ -101,7 +96,6 @@ public class GameManager : MonoBehaviour
 
 
     }
-
 
     private IEnumerator RoundEnding()
     {
@@ -120,7 +114,6 @@ public class GameManager : MonoBehaviour
         yield return m_EndWait;
     }
 
-
     private bool OneTankLeft()
     {
         int numTanksLeft = 0;
@@ -134,7 +127,6 @@ public class GameManager : MonoBehaviour
         return numTanksLeft <= 1;
     }
 
-
     private TankManager GetRoundWinner()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -146,7 +138,6 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-
     private TankManager GetGameWinner()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -157,7 +148,6 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
-
 
     private string EndMessage()
     {
@@ -179,7 +169,6 @@ public class GameManager : MonoBehaviour
         return message;
     }
 
-
     private void ResetAllTanks()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -188,7 +177,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private void EnableTankControl()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -196,7 +184,6 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].EnableControl();
         }
     }
-
 
     private void DisableTankControl()
     {
