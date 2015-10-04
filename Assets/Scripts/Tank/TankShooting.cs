@@ -18,11 +18,12 @@ public class TankShooting : MonoBehaviour
     private string m_FireButton;         
     private float m_CurrentLaunchForce;  
     private float m_ChargeSpeed;         
-    private bool m_Fired;                
-
+    private bool m_Fired;
+    private GameManager m_GManager;
 
     private void Start()
     {
+        m_GManager = GameManager.Instance;
         m_FireButton = "Fire" + m_PlayerNumber;
 
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;

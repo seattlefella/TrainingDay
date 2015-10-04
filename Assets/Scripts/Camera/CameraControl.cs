@@ -11,14 +11,22 @@ public class CameraControl : MonoBehaviour
     private Camera m_Camera;                        
     private float m_ZoomSpeed;                      
     private Vector3 m_MoveVelocity;                 
-    private Vector3 m_DesiredPosition;              
+    private Vector3 m_DesiredPosition;
+    
+    private GameManager m_GManager;
 
 
     private void Awake()
     {
+
         m_Camera = GetComponentInChildren<Camera>();
+
     }
 
+    private void Start()
+    {
+        m_GManager = GameManager.Instance;
+    }
 
     private void FixedUpdate()
     {

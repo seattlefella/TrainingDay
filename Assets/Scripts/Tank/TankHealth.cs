@@ -14,8 +14,11 @@ public class TankHealth : MonoBehaviour
     private AudioSource m_ExplosionAudio;          
     private ParticleSystem m_ExplosionParticles;   
     private float m_CurrentHealth;  
-    private bool m_Dead;            
-
+    private bool m_Dead;   
+             
+    private GameManager m_GManager;
+    private NotificationsManager m_NManager;
+//    private PoolManager m_PManager;
 
     private void Awake()
     {
@@ -25,6 +28,11 @@ public class TankHealth : MonoBehaviour
         m_ExplosionParticles.gameObject.SetActive(false);
     }
 
+    private void Start()
+    {
+        m_GManager = GameManager.Instance;
+        m_NManager = GameManager.Notifications;
+    }
 
     private void OnEnable()
     {

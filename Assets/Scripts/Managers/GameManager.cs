@@ -23,10 +23,14 @@ public class GameManager : MonoBehaviour
     private TankManager m_RoundWinner;
     private TankManager m_GameWinner;
 
+
+    // We should not create a singlton if we are in the middle of quitting the application
+    private static bool applicationIsQuitting = false;
+
     //Internal reference to single active instance of object - for singleton behaviour
     private static GameManager instance = null;
 
-    //Internal reference to notifications object
+    //Internal reference to notifications object - for singleton behaviour
     private static NotificationsManager notifications = null;
 
     //C# property to retrieve GameObject (A singlton)    
@@ -34,6 +38,12 @@ public class GameManager : MonoBehaviour
     {
         get
         {
+            if (applicationIsQuitting)
+            {
+                Debug.LogWarning("[Singleton] GameManager will not be recreated as we are shutting down!");
+                return null;
+            }
+
             if (instance == null) instance = new GameObject("GameManager").AddComponent<GameManager>(); //create game manager object if required
             return instance;
         }
@@ -44,6 +54,12 @@ public class GameManager : MonoBehaviour
     {
         get
         {
+            if (applicationIsQuitting)
+            {
+                Debug.LogWarning("[Singleton] NotificationManager will not be recreated as we are shutting down!");
+                return null;
+            }
+
             if (notifications == null) notifications = instance.GetComponent<NotificationsManager>();
             return notifications;
         }
@@ -253,6 +269,21 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+
+    /// <summary>
+    /// When Unity quits, it destroys objects in a random order.
+    /// In principle, a Singleton is only destroyed when application quits.
+    /// If any script calls Instance after it have been destroyed, 
+    ///   it will create a buggy ghost object that will stay on the Editor scene
+    ///   even after stopping playing the Application. Really bad!
+    /// So, this was made to be sure we're not creating that buggy ghost object.
+    /// </summary>
+    public void OnDestroy()
+    {
+        applicationIsQuitting = true;
+    }
+
 
 }
 

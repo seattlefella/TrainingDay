@@ -17,6 +17,7 @@ public class TankMovement : MonoBehaviour
     private float m_MovementInputValue;    
     private float m_TurnInputValue;        
     private float m_OriginalPitch;         
+    private GameManager m_GManager;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class TankMovement : MonoBehaviour
 
     private void Start()
     {
+         m_GManager = GameManager.Instance;
         m_MovementAxisName = "Vertical" + m_PlayerNumber;
         m_TurnAxisName = "Horizontal" + m_PlayerNumber;
 
