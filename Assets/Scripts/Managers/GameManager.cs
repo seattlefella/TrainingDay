@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
+//--------------------------------------
+//Game Manager requires other manager components
+[RequireComponent(typeof(NotificationsManager))] //Component for sending and receiving notifications
 public class GameManager : MonoBehaviour
 {
     public int m_NumRoundsToWin = 5;        
@@ -17,8 +21,50 @@ public class GameManager : MonoBehaviour
     private WaitForSeconds m_StartWait;     
     private WaitForSeconds m_EndWait;       
     private TankManager m_RoundWinner;
-    private TankManager m_GameWinner;       
+    private TankManager m_GameWinner;
 
+    //Internal reference to single active instance of object - for singleton behaviour
+    private static GameManager instance = null;
+
+    //Internal reference to notifications object
+    private static NotificationsManager notifications = null;
+
+    //C# property to retrieve GameObject (A singlton)    
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null) instance = new GameObject("GameManager").AddComponent<GameManager>(); //create game manager object if required
+            return instance;
+        }
+    }
+
+    //C# property to retrieve notifications manager (A singlton) 
+    public static NotificationsManager Notifications
+    {
+        get
+        {
+            if (notifications == null) notifications = instance.GetComponent<NotificationsManager>();
+            return notifications;
+        }
+    }
+
+    // Called before Start on object creation
+    void Awake()
+    {
+        //Check if there is an existing instance of this object
+        if ((instance) && (instance.GetInstanceID() != GetInstanceID()))
+        {
+            DestroyImmediate(gameObject); //Delete duplicate
+            Debug.Log("destroyed a dup GameManager");
+        }
+        else
+        {
+            instance = this; //Make this object the only instance
+            DontDestroyOnLoad(gameObject); //Set as do not destroy
+            Debug.Log("Created a single new GameManager");
+        }
+    }
 
     private void Start()
     {
@@ -192,4 +238,21 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].DisableControl();
         }
     }
+
+
+    //--------------------------------------------------------------
+    //Restart Game
+    public void RestartGame()
+    {
+        //Load first level
+        Application.LoadLevel(0);
+    }
+    //--------------------------------------------------------------
+    //Exit Game
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }
+
